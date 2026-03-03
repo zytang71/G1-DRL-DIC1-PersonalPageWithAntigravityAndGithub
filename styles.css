@@ -1,0 +1,82 @@
+:root{
+  --bg-1:#0f0227;
+  --bg-2:#1c0333;
+  --glass-bg: rgba(255,255,255,0.06);
+  --glass-border: rgba(255,255,255,0.12);
+  --accent-1: #8b5cf6;
+  --accent-2: #6d28d9;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: linear-gradient(120deg,var(--bg-1),var(--bg-2));
+  color: #e9e9f1;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+.bg{position:absolute;inset:0;z-index:0;pointer-events:none;}
+/* animated gradient backdrop */
+.bg::before{
+  content:"";position:absolute;inset:-20% ;
+  background: radial-gradient(circle at 10% 10%, rgba(139,92,246,0.18), transparent 8%),
+              radial-gradient(circle at 90% 90%, rgba(99,102,241,0.14), transparent 10%),
+              linear-gradient(120deg,#0b0221 0%, #1a0330 50%, #2b0a4a 100%);
+  filter: blur(30px) saturate(120%);
+  transform: scale(1.05);
+  animation: bgShift 12s linear infinite;
+}
+@keyframes bgShift{0%{transform:scale(1.03) rotate(0deg)}50%{transform:scale(1.06) rotate(2deg)}100%{transform:scale(1.03) rotate(0deg)}}
+
+.orb{position:absolute;border-radius:50%;filter:blur(60px);opacity:0.6}
+.orb--1{width:360px;height:360px;left:-8%;top:10%;background:radial-gradient(circle,#6d28d9 0%,transparent 60%)}
+.orb--2{width:260px;height:260px;right:-6%;bottom:8%;background:radial-gradient(circle,#8b5cf6 0%,transparent 60%)}
+.orb--3{width:200px;height:200px;left:50%;top:-6%;transform:translateX(-50%);background:radial-gradient(circle,#4c1d95 0%,transparent 60%)}
+
+.wrap{position:relative;z-index:2;padding:40px;width:100%;max-width:760px;display:flex;flex-direction:column;align-items:center}
+.card{
+  width:100%;padding:40px;border-radius:16px;
+  background: var(--glass-bg);
+  border:1px solid var(--glass-border);
+  box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+  backdrop-filter: blur(10px) saturate(130%);
+  transition: transform 0.35s cubic-bezier(.2,.9,.35,1), box-shadow 0.35s;
+  text-align:center;
+}
+.card:hover{transform:translateY(-10px);box-shadow:0 20px 40px rgba(2,6,23,0.6)}
+
+.name{font-family:Outfit, Inter, sans-serif;margin:0;font-size:2.6rem;letter-spacing: -0.02em}
+.subtitle{margin:8px 0 20px;color:rgba(233,233,241,0.8)}
+
+.datetime{display:flex;flex-direction:column;gap:8px;align-items:center}
+.date{font-size:1rem;color:rgba(233,233,241,0.85)}
+.time{font-size:1.9rem;font-weight:600}
+
+/* shimmer text */
+.shimmer{
+  background: linear-gradient(90deg,#a78bfa 10%, #fff 45%, #a78bfa 80%);
+  background-size:200% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  animation: shimmer 3s linear infinite;
+}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* fade-up entrance */
+.fade-up{opacity:0;transform:translateY(18px);animation:fadeUp .6s cubic-bezier(.2,.9,.35,1) forwards;animation-delay:var(--delay,0s)}
+@keyframes fadeUp{to{opacity:1;transform:none}}
+
+.credits{margin-top:18px;color:rgba(233,233,241,0.7);font-size:0.9rem}
+
+/* responsive tweaks */
+@media (max-width:600px){
+  .card{padding:28px;border-radius:14px}
+  .name{font-size:2rem}
+  .time{font-size:1.6rem}
+  .orb--1{width:260px;height:260px}
+}

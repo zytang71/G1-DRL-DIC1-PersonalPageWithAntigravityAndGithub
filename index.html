@@ -1,207 +1,54 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jack Tang - Personal Webpage</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --bg1: #0f0522;
-            --bg2: #21004a;
-            --bg3: #3b0b6f;
-            --accent1: #9b5cff;
-            --accent2: #d16ce8;
-            --glass: rgba(255,255,255,0.06);
-        }
-
-        body {
-            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Outfit';
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(120deg, var(--bg1), var(--bg2), var(--bg3));
-            background-size: 300% 300%;
-            animation: gradientShift 18s ease infinite;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Floating Orbs */
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(100px);
-            opacity: 0.55;
-            mix-blend-mode: screen;
-            transform: translate3d(0,0,0);
-        }
-
-        .orb-1 { width: 360px; height: 360px; background: radial-gradient(circle at 30% 30%, rgba(155,92,255,0.9), rgba(155,92,255,0)); top: -8%; left: 6%; animation: float 22s infinite ease-in-out; }
-        .orb-2 { width: 300px; height: 300px; background: radial-gradient(circle at 70% 70%, rgba(81,45,168,0.85), rgba(81,45,168,0)); bottom: -6%; right: 8%; animation: float 24s infinite ease-in-out; opacity:0.45 }
-        .orb-3 { width: 420px; height: 420px; background: radial-gradient(circle at 50% 50%, rgba(209,108,232,0.7), rgba(209,108,232,0)); top: 40%; right: -10%; animation: float 26s infinite ease-in-out; opacity:0.5 }
-
-        @keyframes float {
-            0% { transform: translateY(0) translateX(0); }
-            25% { transform: translateY(-30px) translateX(20px); }
-            50% { transform: translateY(0) translateX(40px); }
-            75% { transform: translateY(30px) translateX(20px); }
-            100% { transform: translateY(0) translateX(0); }
-        }
-
-        /* Main Container */
-        .container { position: relative; z-index: 20; width: 100%; max-width: 920px; padding: 24px; display:flex; justify-content:center }
-
-        /* Glassmorphism Card */
-        .card {
-            position: relative;
-            width: min(72vmin, 520px);
-            aspect-ratio: 1 / 1;
-            background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.015));
-            backdrop-filter: blur(24px) saturate(140%) contrast(105%);
-            -webkit-backdrop-filter: blur(24px) saturate(140%) contrast(105%);
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 20px;
-            padding: 36px 40px;
-            box-shadow: 0 12px 48px rgba(2,6,23,0.66), inset 0 1px 0 rgba(255,255,255,0.03), inset 0 -28px 60px rgba(0,0,0,0.28);
-            transition: transform 0.45s cubic-bezier(.2,.9,.3,1), box-shadow 0.45s ease, backdrop-filter 0.45s ease;
-            transform: translateZ(0);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-        /* glossy highlight + subtle noise texture */
-        .card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            border-radius: inherit;
-            background-image: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 20%, rgba(255,255,255,0.00) 50%);
-            mix-blend-mode: overlay;
-            filter: blur(6px) contrast(1.05);
-        }
-
-        /* thin glossy stripe */
-        .card::after {
-            content: '';
-            position: absolute;
-            left: -30%;
-            top: -40%;
-            width: 160%;
-            height: 60%;
-            transform: rotate(-18deg);
-            background: linear-gradient(90deg, rgba(255,255,255,0.25), rgba(255,255,255,0.02) 40%, rgba(255,255,255,0));
-            opacity: 0.55;
-            pointer-events: none;
-            border-radius: 40%;
-            mix-blend-mode: screen;
-            filter: blur(8px);
-        }
-
-        /* subtle grain using a repeating radial pattern */
-        .card .grain {
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            background-image: radial-gradient(rgba(255,255,255,0.012) 1px, transparent 1px);
-            background-size: 6px 6px;
-            pointer-events: none;
-            opacity: 0.7;
-            mix-blend-mode: overlay;
-        }
-
-        .card:hover { transform: translateY(-14px) scale(1.01); box-shadow: 0 36px 96px rgba(2,6,23,0.74), inset 0 1px 0 rgba(255,255,255,0.04); backdrop-filter: blur(28px) saturate(150%) contrast(110%); }
-
-        /* Staggered fade-up for children */
-        .fade-item { opacity: 0; transform: translateY(18px); animation: fadeUp 0.9s cubic-bezier(.2,.9,.3,1) forwards; }
-        .fade-item:nth-of-type(1) { animation-delay: 0.08s }
-        .fade-item:nth-of-type(2) { animation-delay: 0.2s }
-        .fade-item:nth-of-type(3) { animation-delay: 0.34s }
-        .fade-item:nth-of-type(4) { animation-delay: 0.48s }
-
-        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-
-        /* Name with Gradient Shimmer */
-        .name { font-family: 'Outfit', 'Inter', sans-serif; font-size: clamp(1.8rem, 5vw, 3.2rem); font-weight: 800; margin-bottom: 18px; line-height:1; letter-spacing:-0.015em; background: linear-gradient(90deg, var(--accent1), var(--accent2)); background-size:200% 100%; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent; animation: shimmer 4s ease-in-out infinite; text-shadow: 0 1px 0 rgba(0,0,0,0.12); }
-        @keyframes shimmer { 0%,100%{ background-position:0% } 50%{ background-position:100% } }
-
-        .clock { font-family: 'Inter', system-ui, sans-serif; font-size: clamp(1.6rem, 6vw, 3.2rem); font-weight: 700; color: rgba(255,255,255,0.96); margin-bottom:8px; font-variant-numeric: tabular-nums; letter-spacing:0.06em }
-        .date { font-family: 'Inter', system-ui, sans-serif; font-size: 1rem; color: rgba(255,255,255,0.78); margin-bottom:10px }
-        .subtitle { font-family: 'Inter', system-ui, sans-serif; font-size: 0.85rem; color: rgba(255,255,255,0.66); margin-top:12px; text-transform:uppercase; letter-spacing:0.14em; font-weight:600 }
-
-        /* Responsive */
-        @media (max-width: 720px) {
-            .card { width: min(86vmin, 420px); padding: 20px; border-radius: 16px }
-            .container { padding: 18px }
-            .orb-1 { width: 260px; height: 260px; top: -12%; left: -6% }
-            .orb-2 { width: 200px; height: 200px; right: -6%; bottom: -10% }
-            .orb-3 { width: 300px; height: 300px; right: -14%; top: 48% }
-        }
-
-        @media (max-width: 420px) {
-            .name { font-size: 1.6rem }
-            .clock { font-size: 2rem }
-            .card { padding: 20px }
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jack Tang — Personal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Floating Orbs -->
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
+  <div class="bg">
+    <div class="orb orb--1"></div>
+    <div class="orb orb--2"></div>
+    <div class="orb orb--3"></div>
+  </div>
 
-    <!-- Main Content -->
-    <div class="container">
-        <div class="card">
-            <div class="name fade-item">Jack Tang</div>
-            <div class="clock fade-item" id="clock">00:00:00</div>
-            <div class="date fade-item" id="date"></div>
-            <div class="subtitle fade-item">Personal Webpage</div>
-            <div class="grain"></div>
-        </div>
-    </div>
+  <main class="wrap">
+    <section class="card fade-up" style="--delay:0s">
+      <h1 class="name shimmer">Jack Tang</h1>
+      <p class="subtitle">Creative Developer &amp; Designer</p>
+      <div class="datetime">
+        <div id="date" class="date"></div>
+        <div id="time" class="time" aria-live="polite"></div>
+      </div>
+    </section>
+    <footer class="credits fade-up" style="--delay:0.15s">Built with glassmorphism • Fonts: Outfit &amp; Inter</footer>
+  </main>
 
-    <script>
-        function updateTime() {
-            const now = new Date();
-            
-            // Update Clock
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
-            
-            // Update Date
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            const dateString = now.toLocaleDateString('en-US', options);
-            document.getElementById('date').textContent = dateString;
-        }
-        
-        // Initial update
-        updateTime();
-        
-        // Update every second
-        setInterval(updateTime, 1000);
-    </script>
+  <script>
+  function pad(v){return v.toString().padStart(2,'0')}
+  function updateClock(){
+    const now = new Date();
+    const timeEl = document.getElementById('time');
+    const dateEl = document.getElementById('date');
+    if(!timeEl || !dateEl) return;
+
+    const h = pad(now.getHours());
+    const m = pad(now.getMinutes());
+    const s = pad(now.getSeconds());
+    timeEl.textContent = `${h}:${m}:${s}`;
+
+    const opts = { weekday:'long', year:'numeric', month:'long', day:'numeric' };
+    dateEl.textContent = new Intl.DateTimeFormat(undefined, opts).format(now);
+  }
+
+  document.addEventListener('DOMContentLoaded',()=>{
+    const items = document.querySelectorAll('.fade-up');
+    items.forEach((el,i)=>el.style.setProperty('--delay', `${i*0.08}s`));
+    updateClock();
+    setInterval(updateClock,1000);
+  });
+  </script>
 </body>
 </html>
