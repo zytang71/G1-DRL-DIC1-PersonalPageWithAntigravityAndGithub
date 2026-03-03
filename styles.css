@@ -1,8 +1,8 @@
 :root{
   --bg-1:#0f0227;
   --bg-2:#1c0333;
-  --glass-bg: rgba(255,255,255,0.06);
-  --glass-border: rgba(255,255,255,0.12);
+  --glass-bg: rgba(255,255,255,0.08);
+  --glass-border: rgba(255,255,255,0.18);
   --accent-1: #8b5cf6;
   --accent-2: #6d28d9;
 }
@@ -41,15 +41,25 @@ body{
 
 .wrap{position:relative;z-index:2;padding:40px;width:100%;max-width:760px;display:flex;flex-direction:column;align-items:center}
 .card{
-  width:100%;padding:40px;border-radius:16px;
-  background: var(--glass-bg);
+  width:100%;
+  max-width:540px;
+  width: min(92vw, 540px);
+  aspect-ratio: 1 / 1;
+  padding:40px;
+  border-radius:18px;
+  /* stronger frosted glass */
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
   border:1px solid var(--glass-border);
-  box-shadow: 0 8px 30px rgba(2,6,23,0.6);
-  backdrop-filter: blur(10px) saturate(130%);
+  box-shadow: 0 12px 40px rgba(2,6,23,0.7), inset 0 1px 0 rgba(255,255,255,0.03);
+  backdrop-filter: blur(18px) saturate(160%);
   transition: transform 0.35s cubic-bezier(.2,.9,.35,1), box-shadow 0.35s;
   text-align:center;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
 }
-.card:hover{transform:translateY(-10px);box-shadow:0 20px 40px rgba(2,6,23,0.6)}
+.card:hover{transform:translateY(-12px);box-shadow:0 28px 60px rgba(2,6,23,0.75)}
 
 .name{font-family:Outfit, Inter, sans-serif;margin:0;font-size:2.6rem;letter-spacing: -0.02em}
 .subtitle{margin:8px 0 20px;color:rgba(233,233,241,0.8)}
@@ -75,7 +85,7 @@ body{
 
 /* responsive tweaks */
 @media (max-width:600px){
-  .card{padding:28px;border-radius:14px}
+  .card{padding:20px;border-radius:14px; width: min(94vw,420px)}
   .name{font-size:2rem}
   .time{font-size:1.6rem}
   .orb--1{width:260px;height:260px}
