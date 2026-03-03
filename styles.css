@@ -41,17 +41,19 @@ body{
 
 .wrap{position:relative;z-index:2;padding:40px;width:100%;max-width:760px;display:flex;flex-direction:column;align-items:center}
 .card{
-  width:100%;
-  max-width:540px;
-  width: min(92vw, 540px);
-  aspect-ratio: 1 / 1;
+  width: clamp(280px, 32vw, 520px);
+  height: clamp(280px, 32vw, 520px); /* square card */
   padding:40px;
   border-radius:18px;
-  /* stronger frosted glass */
-  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
-  border:1px solid var(--glass-border);
-  box-shadow: 0 12px 40px rgba(2,6,23,0.7), inset 0 1px 0 rgba(255,255,255,0.03);
-  backdrop-filter: blur(18px) saturate(160%);
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06)),
+    rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.28);
+  outline:1px solid rgba(255,255,255,0.08);
+  box-shadow:
+    0 18px 48px rgba(2,6,23,0.75),
+    inset 0 1px 0 rgba(255,255,255,0.35);
+  backdrop-filter: blur(22px) saturate(190%) brightness(1.06);
   transition: transform 0.35s cubic-bezier(.2,.9,.35,1), box-shadow 0.35s;
   text-align:center;
   display:flex;
@@ -59,7 +61,12 @@ body{
   justify-content:center;
   align-items:center;
 }
-.card:hover{transform:translateY(-12px);box-shadow:0 28px 60px rgba(2,6,23,0.75)}
+.card:hover{
+  transform:translateY(-12px);
+  box-shadow:
+    0 30px 70px rgba(2,6,23,0.82),
+    inset 0 1px 0 rgba(255,255,255,0.4);
+}
 
 .name{font-family:Outfit, Inter, sans-serif;margin:0;font-size:2.6rem;letter-spacing: -0.02em}
 .subtitle{margin:8px 0 20px;color:rgba(233,233,241,0.8)}
@@ -85,7 +92,12 @@ body{
 
 /* responsive tweaks */
 @media (max-width:600px){
-  .card{padding:20px;border-radius:14px; width: min(94vw,420px)}
+  .card{
+    padding:20px;
+    border-radius:14px;
+    width: min(94vw, 420px);
+    height: min(94vw, 420px);
+  }
   .name{font-size:2rem}
   .time{font-size:1.6rem}
   .orb--1{width:260px;height:260px}
